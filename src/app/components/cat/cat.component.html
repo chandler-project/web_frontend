@@ -1,0 +1,59 @@
+<div class="jumbotron">
+  <div class="backdrop">
+    <div class="container">
+      <h1 class="display-3">Tham gia ngay</h1>
+      <p class="lead"> Hệ thống mua sắm an toàn và hiệu quả</p>
+      <button class="btn btn-primary text-uppercase" *ngIf="!currentUser" (click)="openLoginModal()">
+        Tham gia ngay
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container chandler__home">
+  <div class="row">
+    <div class="col-sm-3 col-lg-3 chandler__home-sidebar">
+      <ul class="list-categories">
+        <li class="list-categories__items" *ngIf="currentUser">
+          <a routerLink="/">
+            <img [src]="avatar" alt="" class="rounded-circle"> Tin của bạn
+          </a>
+        </li>
+        <li class="list-categories__items">
+          <a routerLink="/trending">
+            <i class="fa fa-fire" aria-hidden="true"></i>
+            Nổi bật
+          </a>
+        </li>
+        <li class="list-categories__items" *ngFor="let category of categories">
+          <a routerLink="/cat/{{category.slug}}" routerLinkActive="active">
+            <i class="fa {{category.icon}}" aria-hidden="true"></i>
+            {{category.name}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-lg-9 chandler__home-main chander-category__main" *ngIf="deals?.length > 0">
+      <div class="row">
+        <div class="col-lg-4 col-sm-6 deal-content" *ngFor="let deal of deals; let i = index"
+             [ngClass]="{'col-sm-6': i % 3 !== 0, 'hidden-lg-down': i%3 === 0}">
+          <div class="chandler__home-deal">
+            <div class="card">
+              <div class="card-img-top"
+                   [ngStyle]="{'background-image': 'url(\'' + deal.productPics[0] + '\')'}"></div>
+              <div class="card-block">
+                <div class="clearfix">
+                  <small class="pull-left">{{(deal.category.name)}}</small>
+                  <small class="pull-right">{{deal.price | number: '3.'}}VND</small>
+                </div>
+                <h4 class="card-title text-ellipsis"><a
+                  routerLink="/deal/{{deal.id}}">{{deal.productName.slice(0,20)}}</a></h4>
+                <div [innerHTML]="deal.productDesc" class="deal-description text-ellipsis"></div>
+                <chandler-deal-footer [deal]="deal"></chandler-deal-footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

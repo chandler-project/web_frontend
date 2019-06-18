@@ -1,0 +1,23 @@
+<div class="deal-footer" *ngIf="deal">
+  <div class="deal-owner float-left d-flex">
+    <div class="deal-owner-avatar">
+      <img
+        src="{{baseURL}}/{{deal.shipper.avatar}}"
+        alt="" class="rounded-circle" (click)="gotoProfilePage(deal.shipper.id)">
+    </div>
+    <div class="request-footer__info d-flex flex-column">
+      <span><a (click)="gotoProfilePage(deal.shipper.id)">{{deal.shipper.fullName}}</a></span>
+      <small>{{deal.shipper.points}} điểm</small>
+    </div>
+  </div>
+  <div class="float-right upvote-downvote d-flex">
+    <div class="d-flex ">
+      <div [innerHTML]="upvoteSVG" (click)="upVote()"></div>
+      <span>{{deal.upvote}}</span>
+    </div>
+    <div class="d-flex ">
+      <div [innerHTML]="downvoteSVG" (click)="downVote()"></div>
+      <span>{{deal.downvote}}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="container deal-banner" *ngIf="request"
+     background-image="{{request.productPics[0]}}">
+
+</div>
+<div class="container pb-5" *ngIf="request">
+  <div class="row">
+    <div class="col-lg-9">
+      <div class="deal-info">
+        <h1 class="deal-product-name">{{request.productName}}</h1>
+        <div class="button-end-price mb-3">
+          <button type="button" class="btn btn-danger">Thời gian cần: {{request.deadline}}</button>
+          <button type="button" class="btn btn-danger">Số lượng cần: {{request.amount}}</button>
+        </div>
+        <div class="button-end-price mb-3">
+          <button type="button" class="btn btn-warning">Giá sản phẩm: {{request.price | number: '3.'}} VND</button>
+          <button type="button" class="btn btn-warning">Giá đề nghị: {{request.budget.min | number: '3.'}} VND -
+            {{request.budget.max | number: '3.'}} VND
+          </button>
+        </div>
+        <div class="deal-reference text-ellipsis">
+          <a href="{{request.reference}}">{{request.reference}}</a>
+        </div>
+        <div class="deal-description">
+          <h5>Chi tiết sản phẩm</h5>
+          <div [innerHTML]="request.description"></div>
+        </div>
+      </div>
+      <div class="comment-sections" *ngIf="request.bidders.length > 0">
+        <h3>Đặt giá ({{request.bidders.length}})</h3>
+        <div class="bidder d-flex flex-column mb-3" *ngFor="let bidder of request.bidders">
+          <div class="bidder-info d-flex flex-row justify-content-center">
+            <img src="{{mediaUrl}}{{bidder.avatar}}" alt="" class="rounded-circle" width="48" height="48">
+            <div class="d-flex flex-column bidder-name">
+              <span class="bidder-fullname"><b>{{bidder.fullName}}</b> </span>
+              <span class="bidder-point"><b>{{bidder.points}} điểm</b></span>
+            </div>
+            <button type="button" class="btn btn-warning">Đã đặt với giá: {{bidder.price | number: '3.'}} VND</button>
+            <button type="button" class="btn btn-default ml-3" (click)="choose(bidder.id, bidder.price)"
+                    *ngIf="currentUser && currentUser.id === request.owner.id && request.status.toLowerCase() === 'pending'">
+              Đặt mua ngay
+            </button>
+            <i
+              class="fa fa-check-square-o fa-3x ml-2 text-success"
+              *ngIf="request.status === 'Ordered' && request.choosen && request.choosen.id === bidder.id"></i>
+          </div>
+          <div class="bidder-description">
+            {{bidder.sentence}}
+          </div>
+          <div class="bidder-timestamp">
+            {{bidder.timestamp | amLocale:'vi' | amTimeAgo}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 activities">
+      <div class="shipper-info" *ngIf="request.owner">
+        <h4 class="shipper-title">Người yêu cầu</h4>
+        <div class="request-input__info d-flex">
+          <div class="request-footer__avatar request-input__avatar">
+            <img src="{{baseUrl}}/{{request.owner.avatar}}"
+                 alt="" class="rounded-circle">
+          </div>
+          <div class="request-footer__info d-flex flex-column">
+            <span>{{request.owner.fullName}}</span>
+            <small>{{request.owner.points}} điểm</small>
+            <small>{{request.owner.bio}}</small>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary w-100" (click)="bid(request.id)"
+              *ngIf="currentUser && currentUser.id !== request.owner.id && !isBidded">
+        Đặt giá ngay
+      </button>
+    </div>
+  </div>
+</div>

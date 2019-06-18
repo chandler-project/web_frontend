@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="row pb-5">
+    <div class="col-8 deal-form">
+      <form class="mt-3" [formGroup]="requestForm" (ngSubmit)="addRequest(requestForm.value)">
+        <div class="form-group">
+          <label for="product-name">1. Tên sản phẩm bạn muốn yêu cầu là gì ? <span
+            class="require-star">*</span> </label>
+          <input type="text" class="form-control deal-form__input" id="product-name"
+                 placeholder="Tai nghe Sony MDR 1000/Black" formControlName="productName">
+        </div>
+        <div class="form-group">
+          <label for="product-reference">2. Bạn tìm thấy sản phẩm này ở đâu ( đường dẫn liên quan )? <span
+            class="require-star">*</span>
+          </label>
+          <input type="text" class="form-control deal-form__input" id="product-reference"
+                 placeholder="https://www.amazon.com/" formControlName="reference">
+        </div>
+        <div class="form-group">
+          <label for="product-reference">2. Thông tin mô tả sản phẩm? <span
+            class="require-star">*</span>
+          </label>
+          <app-ngx-editor
+            [placeholder]="'Đây là tai nghe có chất lương Noice cancelling tốt nhất mà mình từng nghe được'"
+            [config]="editorConfig" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"
+            [spellcheck]="true"></app-ngx-editor>
+        </div>
+        
+        <div class="form-group">
+          <label for="product-reference">3. Giá sản phẩm? <span
+            class="require-star">*</span>
+          </label>
+          <div class="input-group">
+            <input type="text" class="form-control deal-form__input col-3" id="product-price"
+                   placeholder="1,000,000" formControlName="price">
+            <span class="currency">VND</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="product-category">4. Danh mục sản phẩm <span class="require-star">*</span> </label>
+          <select class="custom-select form-control" id="product-category" formControlName="categoryId">
+            <option value="" selected>Chọn 1 danh mục</option>
+            <option value="{{category.id.toString()}}" *ngFor="let category of categories">{{category.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>5. Một số hình ảnh liên quan đến sản phẩm </label>
+          <image-upload [max]="100"
+                        [buttonCaption]="'Chọn hình ảnh'"
+                        [dropBoxMessage]="'Kéo thả hình ảnh vào đây'"
+                        (removed)="onRemoved($event)"
+                        (uploadFinished)="onUploadFinished($event)"
+                        (uploadStateChanged)="onUploadStateChanged($event)"
+          ></image-upload>
+        </div>
+        <div class="form-group">
+          <label for="product-budget">6. Ngân sách bạn có để ship món hàng này về là bao nhiêu? * </label>
+        </div>
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary" id="product-budget">
+            {{budget}} <i class="fa fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><a class="dropdown-item" (click)="budget = 'Rất Nhỏ (100k - 200k)'">Rất Nhỏ (100k -
+              200k)</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="budget = 'Nhỏ (200k - 400k)'">Nhỏ (200k - 400k)</a>
+            </li>
+            <li role="menuitem"><a class="dropdown-item" (click)="budget = 'Trung bình (400k - 600k)'">
+              Trung bình (400k - 600k)</a></li>
+            <li role="menuitem"><a class="dropdown-item" (click)="budget = 'Lớn (600k - 1000k)'">Lớn (600k - 1000k)</a>
+            </li>
+          </ul>
+        </div>
+        <div class="form-group">
+          <label for="product-remain-time">7. Khi nào bạn cần sản phẩm này <span class="require-star">*</span>
+          </label>
+        </div>
+        <div class="btn-group" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary" id="product-remain-time">
+            {{deadline}} <i class="fa fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><a class="dropdown-item" (click)="deadline = 'Nhanh chóng (7 – 15 ngày)'">Nhanh chóng (7
+              – 15 ngày)</a></li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="deadline = 'Tiêu chuẩn (15 – 20 ngày)'">
+                Tiêu chuẩn (15 – 20 ngày)</a></li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="deadline = 'Bình thuường (20 – 30 ngày)'">
+                Bình thuường (20 – 30 ngày)
+              </a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="deadline = 'Linh hoạt (Giao khi có hàng)'">
+                Linh hoạt (Giao khi có hàng)
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="form-group">
+          <label for="shipping-address">8. Bạn ở thành phố nào <span class="require-star">*</span> </label>
+          <input type="text" class="form-control deal-form__input" id="shipping-address"
+                 placeholder="Hồ Chí Minh" formControlName="address">
+        </div>
+        <div class="form-group">
+          <label for="shipping-address">9. Số lượng bạn cần</label>
+          <input type="number" class="form-control deal-form__input" id="shipping-amount"
+                 placeholder="1, 2, 3, 4" formControlName="amount">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-lg btn-primary btn-submit-request">Tạo
+            Yêu Cầu
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-4">
+      <div class="deal-info">
+        <div class="deal-info__heading">
+          <h3>
+            Tạo yêu cầu mới
+          </h3>
+        </div>
+        <div class="deal-info__list">
+          <ul>
+            <li>Lần đầu tiên gửi yêu cầu sẽ giúp bạn có 50 điểm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

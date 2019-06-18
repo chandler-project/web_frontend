@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row pt-5 pb-5">
+    <div class="col-8 deal-form">
+      <form novalidate [formGroup]="dealForm" (ngSubmit)="addDeal(dealForm.value)">
+        <div class="form-group">
+          <label for="product-name">1. Tên sản phẩm <span class="require-star">*</span> </label>
+          <input type="text" class="form-control deal-form__input" id="product-name"
+                 placeholder="Tai nghe Sony MDR 1000/Black" formControlName="productName">
+        </div>
+        <div class="form-group">
+          <label for="product-reference">2. Link chi tiết sản phẩm <span
+            class="require-star">*</span>
+          </label>
+          <input type="text" class="form-control deal-form__input" id="product-reference"
+                 placeholder="https://www.amazon.com/" formControlName="reference">
+        </div>
+        <div class="form-group">
+          <label for="product-price">3. Giá sản phẩm <span class="require-star">*</span> </label>
+          <div class="input-group">
+            <input type="text" class="form-control col-3 deal-form__input" id="product-price"
+                   formControlName="price" currencyMask
+                   [options]="{ prefix: '', suffix: ' đ', thousands: ',', decimal: '.' , align: 'right', precision: 0}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="product-shipping-price">4. Chi phí giao hàng <span class="require-star">*</span> </label>
+          <div class="input-group">
+            <input type="text" class="form-control col-3 deal-form__input" id="product-shipping-price"
+                   formControlName="shippingPrice" currencyMask
+                   [options]="{ prefix: '', suffix: ' đ', thousands: ',', decimal: '.' , align: 'right', precision: 0}">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="product-remain-time">5. Thời gian hết hạn đặt hàng <span class="require-star">*</span> </label>
+          <input type="text" class="form-control deal-form__input w-50" id="product-remain-time"
+                 placeholder="27/10/2017">
+        </div>
+        <div class="form-group">
+          <label for="product-shipping-time">6. Thời gian giao hàng <span class="require-star">*</span>
+          </label>
+        </div>
+        <div class="btn-group mb-3" dropdown>
+          <button dropdownToggle type="button" class="btn btn-primary" id="product-shipping-time">
+            {{deadline}} <i class="fa fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><a class="dropdown-item" (click)="deadline = 'Cần gấp (7 – 15 ngày)'">Cần gấp (7 – 15
+              ngày)</a></li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="deadline = 'Tiêu chuẩn (15 – 20 ngày)'">
+                Tiêu chuẩn (15 – 20 ngày)</a></li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="deadline = 'Bình thuường (20 – 30 ngày)'">
+                Bình thuường (20 – 30 ngày)
+              </a>
+            </li>
+            <li role="menuitem">
+              <a class="dropdown-item" (click)="deadline = 'Linh hoạt (Giao khi có hàng)'">
+                Linh hoạt (Giao khi có hàng)
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="form-group">
+          <label for="product-category" class="w-100">6. Danh mục sản phẩm <span class="require-star">*</span> </label>
+          <select class="custom-select form-control w-50" id="product-category" formControlName="categoryId">
+            <option value="" selected>Chọn 1 danh mục</option>
+            <option value="{{category.id.toString()}}" *ngFor="let category of categories">{{category.name}}</option>
+          </select>
+        
+        </div>
+        <div class="form-group">
+          <label>7. Mô tả một ít về sản phẩm</label>
+          <app-ngx-editor
+            [placeholder]="'Đây là tai nghe có chất lương Noice cancelling tốt nhất mà mình từng nghe được'"
+            [config]="editorConfig"
+            [spellcheck]="true" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></app-ngx-editor>
+        </div>
+        <div class="form-group">
+          <label>8. Một số hình ảnh về sản phẩm </label>
+          <image-upload [max]="100"
+                        [buttonCaption]="'Chọn hình ảnh'"
+                        [dropBoxMessage]="'Kéo thả hình ảnh vào đây'"
+                        (removed)="onRemoved($event)"
+                        (uploadFinished)="onUploadFinished($event)"
+                        (uploadStateChanged)="onUploadStateChanged($event)"
+          ></image-upload>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-lg btn-primary" value="Tạo" [disabled]="!dealForm.valid">
+        </div>
+      </form>
+    </div>
+    <div class="col-4">
+      <div class="deal-info">
+        <div class="deal-info__heading">
+          <h3 class="text-center">
+            Tạo Deal Mới
+          </h3>
+        </div>
+        <div class="deal-info__list">
+          <ul>
+            <li class="mb-2">Lần đầu tiên tạo deal sẽ giúp bạn có 100 điểm</li>
+            <li class="mb-2">Thông tin rõ ràng sẽ giúp bạn dễ nhận đơn đặt hàng hơn</li>
+            <li>Deal sẽ ngay lập tức bị hết hạn nếu hết thời gian đặt hàng</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

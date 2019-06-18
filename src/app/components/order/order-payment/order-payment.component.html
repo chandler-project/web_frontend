@@ -1,0 +1,155 @@
+<div class="container order-page">
+  <div class="row pb-5">
+    <div class="col-8 payment-form">
+      <form novalidate [formGroup]="paymentForm">
+        <h3>1. Địa chỉ thanh toán</h3>
+        <div class="form-group"
+             [class.has-danger]="paymentForm.get('address').dirty && !paymentForm.controls.address.valid"
+             [class.has-success]="paymentForm.controls.address.valid">
+          <input placeholder="Nhập địa chỉ thanh toán" autocorrect="off" autocapitalize="off" spellcheck="off"
+                 type="text" [value]="currentUser.address"
+                 [class.form-control-danger]="paymentForm.get('address').dirty && !paymentForm.controls.address.valid"
+                 [class.form-control-success]="paymentForm.controls.address.valid"
+                 class="form-control" #search formControlName="address">
+        </div>
+        <h3 class="mt-5">2. Số điện thọai liên hệ</h3>
+        <div class="form-group"
+             [class.has-danger]="paymentForm.get('phoneNumber').dirty && !paymentForm.controls.phoneNumber.valid"
+             [class.has-success]="paymentForm.controls.phoneNumber.valid">
+          <input placeholder="Nhập địa chỉ thanh toán" autocorrect="off" autocapitalize="off" spellcheck="off"
+                 type="text" [value]="currentUser.phoneNumber"
+                 [class.form-control-danger]="paymentForm.get('phoneNumber').dirty && !paymentForm.controls.phoneNumber.valid"
+                 [class.form-control-success]="paymentForm.controls.phoneNumber.valid"
+                 class="form-control" #search formControlName="phoneNumber">
+        </div>
+        <h3 class="mt-5">3. Phương thức thanh toán</h3>
+        <div class="form-group mb-3 pl-3">
+          <label for="payment-billing-country">Quốc gia
+          </label>
+          <select class="custom-select form-control" id="payment-billing-country" formControlName="country">
+            <option value="" selected>Việt Nam</option>
+            <option value="{{country}}" *ngFor="let country of COUNTRIES">{{country}}</option>
+          </select>
+        </div>
+        <div class="form-group mb-3 pl-3 clearfix">
+          <label for="payment-type" class="w-100">Kiểu thanh toán</label>
+          <select class="custom-select form-control w-50" id="payment-type" formControlName="type">
+            <option value="" selected>Chọn 1 phương thức</option>
+            <option value="Credit Card" selected>Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Chuyển khoản ngân hàng">Chuyển khoản ngân hàng</option>
+            <option value="Chuyển khoản ngân hàng">Paypal</option>
+          </select>
+        </div>
+        <div class="form-group mb-3 pl-3 col-9 clearfix"
+             [class.has-danger]="paymentForm.get('cardNumber').dirty && !paymentForm.controls.cardNumber.valid"
+             [class.has-success]="paymentForm.controls.cardNumber.valid">
+          <label for="payment-card-number" class="w-100">Số thẻ</label>
+          <input type="text" class="form-control" id="payment-card-number"
+                 formControlName="cardNumber" placeholder="XXXX-XXXX-XXXX-XXXX"
+                 [class.form-control-danger]="paymentForm.get('cardNumber').dirty && !paymentForm.controls.cardNumber.valid"
+                 [class.form-control-success]="paymentForm.controls.cardNumber.valid">
+        </div>
+        <div class="form-group mb-3 pl-3 col-6 float-left pr-0 clearfix"
+             [class.has-danger]="(paymentForm.get('month').dirty && !paymentForm.controls.month.valid) ||
+             (paymentForm.get('year').dirty && !paymentForm.controls.year.valid)"
+             [class.has-success]="paymentForm.controls.month.valid && paymentForm.controls.year.valid">
+          <label class="w-100">Hết hạn</label>
+          <input type="number" class="form-control payment-form__group-inputs mr-4 float-left"
+                 id="payment-expire-on-month" formControlName="month" placeholder="Nhập tháng hết hạn"
+                 [class.form-control-success]="paymentForm.controls.month.valid">
+          <input type="number" class="form-control payment-form__group-inputs" id="payment-expire-on-year"
+                 placeholder="Nhập năm hết hạn"
+                 formControlName="year" [class.form-control-success]="paymentForm.controls.year.valid">
+        </div>
+        <div class="form-group mb-3 col-3 payment-secure-code clearfix"
+             [class.has-danger]="paymentForm.get('secureCode').dirty && !paymentForm.controls.secureCode.valid"
+             [class.has-success]="paymentForm.controls.secureCode.valid">
+          <label for="payment-secure-code" class="w-100">Mã bảo mật</label>
+          <input type="password" class="form-control" id="payment-secure-code" placeholder="Nhập mã bảo mật"
+                 formControlName="secureCode" [class.form-control-success]="paymentForm.controls.secureCode.valid">
+        </div>
+        <div class="form-group mb-3 pl-3 col-6 pr-0 float-left clearfix">
+          <label for="payment-card-first-name" class="w-100">Họ</label>
+          <input type="text" class="form-control" id="payment-card-first-name"
+                 formControlName="firstName" placeholder="Nhập họ và tên đệm của bạn">
+        </div>
+        <div class="form-group mb-3 pl-3 col-6 pr-0 float-left clearfix">
+          <label for="payment-card-last-name" class="w-100">Tên</label>
+          <input type="text" class="form-control" id="payment-card-last-name"
+                 formControlName="lastName" placeholder="Nhập tên của bạn">
+        </div>
+        <div class="form-group mb-3 pl-3 col-3 float-left pr-0 clearfix">
+          <label for="payment-card-postal-code" class="w-100">Mã bưu điện</label>
+          <input type="text" class="form-control" id="payment-card-postal-code"
+                 formControlName="postalCode" placeholder="Nhập mã bưu điện">
+        </div>
+        <h3 class="mt-5 w-100 float-left">3. Điều khoản hoạt động</h3>
+        <p class="payment-term-services float-left">
+          Sau khi đọc nội dung điều khoản hoạt động , bạn đã đồng ý cung cấp thông tin để sử dụng dịch vụ của chúng tôi
+        </p>
+        <button class="btn btn-success text-uppercase float-left accept-payment" (click)="addPayment()">{{total |
+          number: '3.'}}VND - Xác nhận
+          thanh toán
+        </button>
+      </form>
+    </div>
+    <div class="col-4" *ngIf="order || pendingOrders?.length > 0">
+      <div class="d-flex flex-column total-payment">
+        <div class="payment-total d-flex flex-row">
+          <svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg"
+               xmlns:xlink="http://www.w3.org/1999/xlink">
+            <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+            <desc>Created with Sketch.</desc>
+            <defs></defs>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="WEB---Payment" transform="translate(-1041.000000, -163.000000)" fill-rule="nonzero" fill="#B18D3E">
+                <g id="Help" transform="translate(1011.000000, 138.000000)">
+                  <g id="title" transform="translate(30.000000, 24.000000)">
+                    <g id="lightbulb-on-outline" transform="translate(0.000000, 1.000000)">
+                      <path
+                        d="M31.0909091,16.3636364 L36,16.3636364 L36,19.6363636 L31.0909091,19.6363636 L31.0909091,16.3636364 L31.0909091,16.3636364 Z M0,16.3636364 L4.90909091,16.3636364 L4.90909091,19.6363636 L0,19.6363636 L0,16.3636364 L0,16.3636364 Z M19.6363636,0 L19.6363636,4.90909091 L16.3636364,4.90909091 L16.3636364,0 L19.6363636,0 L19.6363636,0 Z M6.41454545,4.09090909 L9.9,7.59272727 L7.57636364,9.9 L4.09090909,6.43090909 L6.41454545,4.09090909 L6.41454545,4.09090909 Z M26.1,7.57636364 L29.5690909,4.09090909 L31.9090909,6.43090909 L28.4236364,9.9 L26.1,7.57636364 L26.1,7.57636364 Z M18,8.18181818 C23.4224321,8.18181818 27.8181818,12.5775679 27.8181818,18 C27.8181818,21.6327273 25.8381818,24.8072727 22.9090909,26.5090909 L22.9090909,29.4545455 C22.9090909,30.3582841 22.176466,31.0909091 21.2727273,31.0909091 L14.7272727,31.0909091 C13.823534,31.0909091 13.0909091,30.3582841 13.0909091,29.4545455 L13.0909091,26.5090909 C10.1618182,24.8072727 8.18181818,21.6327273 8.18181818,18 C8.18181818,12.5775679 12.5775679,8.18181818 18,8.18181818 L18,8.18181818 Z M21.2727273,32.7272727 L21.2727273,34.3636364 C21.2727273,35.267375 20.5401023,36 19.6363636,36 L16.3636364,36 C15.4598977,36 14.7272727,35.267375 14.7272727,34.3636364 L14.7272727,32.7272727 L21.2727273,32.7272727 L21.2727273,32.7272727 Z M16.3636364,27.8181818 L19.6363636,27.8181818 L19.6363636,24.3327273 C22.4672727,23.6127273 24.5454545,21.0436364 24.5454545,18 C24.5454545,14.3850453 21.6149547,11.4545455 18,11.4545455 C14.3850453,11.4545455 11.4545455,14.3850453 11.4545455,18 C11.4545455,21.0436364 13.5327273,23.6127273 16.3636364,24.3327273 L16.3636364,27.8181818 Z"
+                        id="Shape"></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+          <h2>Tổng cộng</h2>
+        </div>
+        <div class="payment-total-detail d-flex flex-column" *ngIf="order">
+          <span class="d-flex flex-row justify-content-between payment-total-line">
+            <span class="align-self-start">{{order.item.amount}} {{order.item.name.slice(0,5)}}</span>
+            <span class="align-self-end">{{order.productPrice | number: '3.'}}VND</span>
+          </span>
+          <span class="d-flex flex-row justify-content-between payment-total-line">
+            <span class="align-self-start">Giá giao hàng</span>
+            <span class="align-self-end">{{order.shippingPrice | number: '3.'}}VND</span>
+          </span>
+        </div>
+        <div *ngIf="pendingOrders?.length > 0">
+          <div class="payment-total-detail d-flex flex-column" *ngFor="let order of pendingOrders">
+            <span class="d-flex flex-row justify-content-between payment-total-line">
+              <span class="align-self-start">{{order.item.amount}} {{order.item.name.slice(0,5)}}</span>
+              <span class="align-self-end">{{order.productPrice | number: '3.'}}VND</span>
+            </span>
+            <span class="d-flex flex-row justify-content-between payment-total-line">
+              <span class="align-self-start">Giá giao hàng</span>
+              <span class="align-self-end">{{order.shippingPrice | number: '3.'}}VND</span>
+            </span>
+          </div>
+        </div>
+        
+        <div class="d-flex flex-column payment-sub-total">
+          <span class="d-flex flex-row justify-content-between payment-total-line">
+            <span class="align-self-start">Tổng cộng: </span>
+            <span class="align-self-end">{{total | number: '3.'}}VND</span>
+          </span>
+          <input type="text" class="payment-form-control" placeholder="Vd: ABCDEF">
+          <span class="d-flex flex-row justify-content-end" (click)="addPromotion()">Áp dụng</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

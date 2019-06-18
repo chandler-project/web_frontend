@@ -1,0 +1,40 @@
+<header>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-faded">
+      <a class="navbar-brand" routerLink="/">chandler</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+              aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="deal" *ngIf="currentUser">Tạo deal mới</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a class="nav-link" routerLink="/cart" *ngIf="currentUser"><i class="fa fa-shopping-cart"
+                                                                        aria-hidden="true"></i><span
+            class="badge badge-danger" *ngIf="totalPendingOrders > 0">{{totalPendingOrders}}</span></a>
+          <a class="nav-link" routerLink="/request">Yêu cầu mua hàng</a>
+          <button class="btn btn-primary my-2 my-sm-0" (click)="openModal()" *ngIf="!currentUser"> Đăng nhập</button>
+          <a class="nav-link" routerLink="/profile" *ngIf="currentUser && currentUser.avatar !== ''">
+            <img src="{{mediaUrl}}{{currentUser.avatar}}" alt="" class="rounded-circle navbar-avatar">
+          </a>
+        </form>
+      </div>
+    </nav>
+  </div>
+</header>
+<ng-template #template>
+  <div class="modal-header login-modal-header">
+    <h4 class="modal-title">Chandler</h4>
+  </div>
+  <div class="modal-body login-modal-body text-center d-grid">
+    <button class="btn btn-primary btn-facebook" (click)="signInWithFB()">
+      <i class="fa fa-facebook" aria-hidden="true"></i> Đăng nhập bằng
+      Facebook
+    </button>
+    <small>Chúng tôi sẽ không đăng bất cứ thứ gì nếu không có sự cho phép của bạn</small>
+  </div>
+</ng-template>

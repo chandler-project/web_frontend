@@ -1,0 +1,77 @@
+.deal-info {
+  background: white;
+  padding: 24px;
+}
+
+.deal-form {
+  padding: .5rem 1rem;
+}
+
+.deal-info__heading {
+  h3 {
+    font-size: 20px;
+    text-align: left;
+  }
+}
+
+.form-group {
+  label {
+    font-size: 20px;
+  }
+}
+
+.deal-form__input {
+  border: none;
+  border-bottom: 1px solid #979797;
+  border-radius: 0;
+  background: transparent;
+}
+
+.deal-form__input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #6a6a6a;
+  font-size: 16px;
+  font-family: Cabin;
+}
+
+.deal-form__input::-moz-placeholder { /* Firefox 19+ */
+  color: #6a6a6a;
+  font-size: 16px;
+  font-family: Cabin;
+}
+
+.deal-form__input:-ms-input-placeholder { /* IE 10+ */
+  color: #6a6a6a;
+  font-size: 16px;
+  font-family: Cabin;
+}
+
+.deal-form__input:-moz-placeholder { /* Firefox 18- */
+  color: #6a6a6a;
+  font-size: 12px;
+  font-family: Cabin;
+}
+
+.currency {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #a6a6a6;
+}
+
+button[dropdownToggle] {
+  height: calc(2.428rem + 2px);
+  padding: .375rem 1.75rem .375rem .75rem;
+  line-height: 1.1;
+  color: #495057;
+  font-size: .95rem;
+  font-weight: 300;
+  background: #fff;
+  background-size: 8px 10px;
+  border: 1px solid #becad6;
+  transition: border-color 250ms cubic-bezier(.27, .01, .38, 1.06), box-shadow 250ms cubic-bezier(.27, .01, .38, 1.06);
+  border-radius: .375rem;
+}
+
+#product-shipping-price, #product-price {
+  font-size: 18px;
+}

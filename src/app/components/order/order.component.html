@@ -1,0 +1,94 @@
+<div class="container order-page" *ngIf="orders?.length > 0">
+  <div class="row">
+    <div class="d-flex flex-row justify-content-between col-12 mt-5">
+      <h1 class="order-title">Tất cả đơn hàng</h1>
+      <button class="btn btn-primary pay-all" (click)="payForAllOrders()" *ngIf="totalPendingOrders > 0">Thanh toán tất
+        cả
+      </button>
+    </div>
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">Người yêu cầu</th>
+            <th scope="col" class="text-center">Người giao hàng</th>
+            <th scope="col">Tiêu đề</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Giá sp</th>
+            <th scope="col">Giá giao hàng</th>
+            <th scope="col">Thời gian giao hàng</th>
+            <th scope="col">Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders; let i = index">
+            <td class="text-left">{{i + 1 }}</td>
+            <td class="text-center w-7">
+              <a routerLink="/profile/{{order.requester.id}}">
+                <img src="{{baseUrl}}/{{order.requester.avatar}}" alt="" class="rounded-circle order-avatar">
+              </a>
+            </td>
+            <td class="text-center w-7">
+              <a routerLink="/profile/{{order.shipper.id}}"><img src="{{baseUrl}}/{{order.shipper.avatar}}" alt=""
+                                                                 class="rounded-circle order-avatar"></a>
+            </td>
+            <td class="w-20">{{order.title}}</td>
+            <td class="text-center">{{order.item.amount}}</td>
+            <td>{{order.productPrice | number: '3.'}} VND</td>
+            <td>{{order.shippingPrice | number: '3.'}} VND</td>
+            <td>{{order.created | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-center" [ngClass]="{'d-flex flex-column': order.status.toLowerCase() === 'pending'}">
+              <span [ngClass]="{'text-default': order.status.toLowerCase() === 'pending',
+            'text-success': order.status.toLowerCase() === 'accepted' || order.status.toLowerCase() === 'success',
+            'text-danger': order.status.toLowerCase() === 'rejected' || order.status.toLowerCase() === 'failed',
+            'text-info': order.status.toLowerCase() === 'paid'}">
+                {{ getStatus(order.status.toLowerCase(), isShipper(order)) }}
+              </span>
+              <span>
+                <i class="fa fa-check-circle-o fa-2x text-success" aria-hidden="true"
+                   *ngIf="isShipper(order) && order.status.toLowerCase() === 'paid'"
+                   (click)="acceptOrder(order, i)"></i>
+                <i class="fa fa-times-circle-o fa-2x text-danger" aria-hidden="true"
+                   *ngIf="isShipper(order) && order.status.toLowerCase() === 'paid'" data-toggle="tooltip"
+                   data-placement="left" title="Từ chối đơn hàng" (click)="denyOrder(order, i)"></i>
+              </span>
+              <button *ngIf="!isShipper(order) && order.status.toLowerCase() === 'pending'"
+                      class="btn btn-outline-primary" (click)="pay(order)">Thanh toán
+              </button>
+              <button *ngIf="!isShipper(order) && order.status.toLowerCase() === 'pending'"
+                      class="btn btn-outline-danger mt-1" (click)="disclaimer(order, i)">Huỷ đơn hàng
+              </button>
+              <button *ngIf="isShipper(order) && order.status.toLowerCase() === 'accepted'"
+                      class="btn btn-outline-primary" (click)="deliveredOrder(order, i)">Đã giao hàng
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="row text-center no-reviews d-flex justify-content-center align-items-center"
+     *ngIf="currentUser && orders?.length === 0">
+  <p class="col-12">Hiện tại bạn chưa có đơn hàng nào hết</p>
+</div>
+
+<ng-template #template>
+  <div class="modal-header confirm-shipping__header">
+    <h3 class="modal-title text-uppercase">Xác nhận giao hàng</h3>
+  </div>
+  <div class="modal-body text-center d-flex flex-column confirm-shipping__body">
+    <p class="text-center">Đơn hàng đã được giao bởi người giao hàng. Vui lòng xác nhận và đánh giá</p>
+    <img src="{{baseUrl}}/{{confirmOrder.shipper.avatar}}" alt="" class="rounded-circle">
+    <rating [(ngModel)]="rate" [max]="max" [readonly]="isReadonly"
+            (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
+            [titles]="['one','two','three']"></rating>
+    <textarea name="feedback" id="feedback" cols="40" rows="5" [(ngModel)]="feedback"
+              class="mb-3 form-control"></textarea>
+    <button class="btn btn-success text-uppercase" (click)="confirmedOrder()">Xác nhận</button>
+    <p>Nếu bạn muốn từ chối nhận hàng , vui lòng nhấn vào <a (click)="rejectShipper()" class="text-danger">đây</a></p>
+  </div>
+
+
+</ng-template>

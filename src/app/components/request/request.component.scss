@@ -1,0 +1,133 @@
+.request-input__info {
+  display: grid;
+  grid-template-columns: 50px 2fr 7fr;
+}
+
+.request-info {
+  display: grid;
+  grid-row-gap: 36px;
+  img {
+    // max-height: 200px;
+  }
+  background: white;
+  .text-justify {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.group-buttons {
+  font-family: ' Cabin ' !important;
+  font-size: 12px;
+  margin: 20px auto;
+  line-height: 24px;
+  letter-spacing: 0.23px;
+  text-align: left;
+  button {
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+  }
+  .btn-primary {
+    background: #0058f5;
+  }
+  .btn-danger {
+    background: #ea3324;
+  }
+}
+
+.btn-price {
+  background: #fecd2d;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.color-mixed {
+  .circle {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+  }
+  .circle-primary {
+    background: #0058f5;
+  }
+}
+
+.list-bidders {
+  display: grid;
+  grid-row-gap: 10px;
+  margin-top: 10px;
+  padding-bottom: 20px;
+  .bid {
+    grid-template-columns: 2fr 5fr 1fr;
+    grid-gap: 10px;
+  }
+  .bid-price {
+    border: 1px solid #979797;
+    text-align: center;
+    justify-content: center;
+    display: grid;
+    border-radius: 2px;
+    .bid-price__p {
+      margin-top: 5px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+    .bid-price__when {
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .bid-comment {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    text-align: left;
+    display: grid;
+    grid-row-gap: 2px;
+  }
+
+  .bid-time {
+    color: #6a6a6a;
+    font-size: 10px;
+    letter-spacing: 0.23;
+  }
+}
+
+.request-footer {
+  display: grid;
+  grid-template-columns: 1fr 3fr 9fr;
+  grid-column-gap: 10px;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.request-footer__avatar {
+  text-align: center;
+  width: auto;
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.request-footer__info {
+  display: grid;
+  justify-content: left;
+  span {
+    font-size: 14px;
+    font-weight: 700;
+  }
+}
+
+.request-footer__bid {
+  background: #f0f0f0;
+  width: 120px;
+  height: 28px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  line-height: 24px;
+}

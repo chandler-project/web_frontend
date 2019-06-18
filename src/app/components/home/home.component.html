@@ -1,0 +1,213 @@
+<div class="jumbotron">
+  <div class="backdrop">
+    <div class="container">
+      <h1 class="display-3">Tham gia ngay</h1>
+      <p class="lead"> Hệ thống mua sắm an toàn và hiệu quả</p>
+      <button class="btn btn-primary text-uppercase" (click)="openLoginModal()" *ngIf="!currentUser">
+        Tham gia ngay
+      </button>
+    </div>
+  </div>
+</div>
+<div class="container chandler__home">
+  <div class="row">
+    <div class="col-sm-3 col-lg-3 chandler__home-sidebar">
+      <ul class="list-categories" *ngIf="categories?.length > 0">
+        <li class="list-categories__items active" *ngIf="currentUser">
+          <a routerLink="/">
+            <img src="{{mediaUrl}}{{currentUser.avatar}}" alt="" class="rounded-circle"> Dành cho bạn
+          </a>
+        </li>
+        <li class="list-categories__items" [ngClass]="{'active': !currentUser}">
+          <a routerLink="/trending">
+            <i class="fa fa-fire" aria-hidden="true"></i>
+            Nổi bật
+          </a>
+        </li>
+        <li class="list-categories__items" *ngFor="let category of categories">
+          <a routerLink="/cat/{{category.slug}}">
+            <i class="fa {{category.icon}}" aria-hidden="true"></i>
+            {{category.name}}
+          </a>
+        </li>
+      </ul>
+      <div class="become-shipper d-grid" *ngIf="currentUser && !currentUser.isShipper">
+        <h3 class="text-center become-shipper-title">Trở thành người giao hàng?</h3>
+        <button class="btn btn-apply" (click)="becomeShipper()">Đăng kí</button>
+      </div>
+      
+      <div class="become-shipper d-flex flex-column">
+        <h3 class="text-center">Yêu cầu nổi bật</h3>
+        <span class="w-100" *ngFor="let request of requests"><a routerLink="/request/{{request.id}}">{{request.productName}} - {{request.price | number: '3.'}}VND</a> </span>
+      </div>
+    </div>
+    <div class="col-sm-9 col-lg-9 chandler__home-main" *ngIf="categories?.length > 0">
+      <h1 class="chandler__home-title">Hottest deal</h1>
+      <div class="row">
+        <div class="col-lg-4 chandler__home-deal chandler__home-deal__main"
+             *ngIf="hottestDeal?.length > 0 && hottestDeal[0]">
+          <div class="card h-100">
+            <div class="card-img-top hottest-deal-img-top"
+                 [ngStyle]="{'background-image': 'url(\'' + hottestDeal[0].productPics[0] + '\')'}"></div>
+            <div class="card-block">
+              <div class="clearfix">
+                <small class="pull-left text-ellipsis">{{getCategoryName(hottestDeal[0].categoryId)}}</small>
+                <small class="pull-right">{{hottestDeal[0].shippingPrice + hottestDeal[0].price | number: '3.'}}VND
+                </small>
+              </div>
+              <h4 class="card-title text-ellipsis w-100"><a routerLink="/deal/{{hottestDeal[0]._id}}">{{hottestDeal[0].productName.slice(0,20)}}</a>
+              </h4>
+              <div [innerHTML]="hottestDeal[0].productDesc"
+                   class="card-text chandler__home-description text-ellipsis w-100"></div>
+              <chandler-deal-footer [deal]="hottestDeal[0]"></chandler-deal-footer>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row ">
+            <div class="col-6" *ngIf="hottestDeal?.length > 0 && hottestDeal[1]">
+              <div class="chandler__home-deal">
+                <div class="card">
+                  <div class="card-img-top"
+                       [ngStyle]="{'background-image': 'url(\'' + hottestDeal[1].productPics[0] + '\')'}"></div>
+                  <div class="card-block">
+                    <div class="clearfix">
+                      <small class="pull-left">{{getCategoryName(hottestDeal[1].categoryId)}}</small>
+                      <small class="pull-right">{{hottestDeal[1].shippingPrice + hottestDeal[1].price |
+                        number:'3.'}}VND
+                      </small>
+                    </div>
+                    <h4 class="card-title text-ellipsis"><a
+                      routerLink="/deal/{{hottestDeal[1]._id}}">{{hottestDeal[1].productName.length > 20 ?
+                      hottestDeal[1].productName.slice(0, 20) + '...' : hottestDeal[1].productName }}</a>
+                    </h4>
+                    <chandler-deal-footer [deal]="hottestDeal[1]"></chandler-deal-footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6" *ngIf="hottestDeal?.length > 0 && hottestDeal[2]">
+              <div class="chandler__home-deal">
+                <div class="card">
+                  <div class="card-img-top"
+                       [ngStyle]="{'background-image': 'url(\'' + hottestDeal[2].productPics[0] + '\')'}"></div>
+                  <div class="card-block">
+                    <div class="clearfix">
+                      <small class="pull-left">{{getCategoryName(hottestDeal[2].categoryId)}}</small>
+                      <small class="pull-right">{{hottestDeal[2].shippingPrice + hottestDeal[2].price|
+                        number:'3.'}}VND
+                      </small>
+                    </div>
+                    <h4 class="card-title text-ellipsis"><a
+                      routerLink="/deal/{{hottestDeal[2]._id}}">{{hottestDeal[2].productName.length > 20 ?
+                      hottestDeal[2].productName.slice(0, 20) + '...' : hottestDeal[2].productName }}</a>
+                    </h4>
+                    <chandler-deal-footer [deal]="hottestDeal[2]"></chandler-deal-footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row chandler__home-row">
+            <div class="col-6" *ngIf="hottestDeal?.length > 0 && hottestDeal[3]">
+              <div class="chandler__home-deal">
+                <div class="card">
+                  <div class="card-img-top"
+                       [ngStyle]="{'background-image': 'url(\'' + hottestDeal[3].productPics[0] + '\')'}"></div>
+                  <div class="card-block">
+                    <div class="clearfix">
+                      <small class="pull-left">{{getCategoryName(hottestDeal[3].categoryId)}}</small>
+                      <small class="pull-right">{{hottestDeal[3].shippingPrice + hottestDeal[3].price|
+                        number:'3.'}}VND
+                      </small>
+                    </div>
+                    <h4 class="card-title text-ellipsis"><a
+                      routerLink="/deal/{{hottestDeal[3]._id}}">{{hottestDeal[3].productName.length > 20 ?
+                      hottestDeal[3].productName.slice(0, 20) + '...' : hottestDeal[3].productName }}</a>
+                    </h4>
+                    <chandler-deal-footer [deal]="hottestDeal[3]"></chandler-deal-footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6" *ngIf="hottestDeal?.length > 0 && hottestDeal[4]">
+              <div class="chandler__home-deal">
+                <div class="card">
+                  <div class="card-img-top"
+                       [ngStyle]="{'background-image': 'url(\'' + hottestDeal[4].productPics[0] + '\')'}"></div>
+                  <div class="card-block">
+                    <div class="clearfix">
+                      <small class="pull-left">{{getCategoryName(hottestDeal[4].categoryId)}}</small>
+                      <small class="pull-right">{{hottestDeal[4].shippingPrice + hottestDeal[4].price|
+                        number:'3.'}}VND
+                      </small>
+                    </div>
+                    <h4 class="card-title text-ellipsis"><a
+                      routerLink="/deal/{{hottestDeal[4]._id}}">{{hottestDeal[4].productName.length > 20 ?
+                      hottestDeal[4].productName.slice(0, 20) + '...' : hottestDeal[4].productName }}</a>
+                    </h4>
+                    <chandler-deal-footer [deal]="hottestDeal[4]"></chandler-deal-footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentUser && currentUser.categories?.length > 0 && deals?.length > 0">
+        <div *ngFor="let category of currentUser.categories" class="mb-4">
+          <h1 class="chandler__home-title"><a routerLink="/cat/{{category.slug}}">{{category.name}}</a> <a
+            routerLink="/cat/{{category.slug}}" class="float-right read-more">Xem thêm</a></h1>
+          <div class="row">
+            <div class="col-lg-4 col-sm-6 mb-4"
+                 *ngFor="let deal of getDealOfCategory(category.id).slice(0,6);let i = index"
+                 [ngClass]="{'mb-4': (3*i+1) % 4 === 0, 'hidden-lg-down': (i+1)%3 === 0}">
+              <div class="chandler__home-deal">
+                <div class="card">
+                  <div class="card-img-top"
+                       [ngStyle]="{'background-image': 'url(\'' + deal.productPics[0] + '\')'}"></div>
+                  <div class="card-block">
+                    <div class="clearfix">
+                      <small class="pull-left">{{getCategoryName(deal.categoryId)}}</small>
+                      <small class="pull-right">{{deal.price + deal.shippingPrice | number:'3.'}}VND</small>
+                    </div>
+                    <h4 class="card-title text-ellipsis"><a
+                      routerLink="/deal/{{deal.id}}">{{deal.productName.length > 20 ?
+                      deal.productName.slice(0, 20) + '...' : deal.productName }}</a></h4>
+                    <chandler-deal-footer [deal]="deal"></chandler-deal-footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-header login-modal-header">
+    <h4 class="modal-title">Chandler</h4>
+  </div>
+  <div class="modal-body login-modal-body text-center d-grid">
+    <p>Chúng tôi luôn hướng đến trải nghiệm tốt nhất dành cho bạn</p>
+    <small>Chọn ít nhất 3 category mà bạn thích</small>
+    
+    <div class="row choose-categories" *ngIf="categories?.length > 0">
+      <div class="col-4" *ngFor="let category of categories" (click)="chooseCategory(category.id)">
+        <i class="fa fa-check-circle-o fa-2x check-category" aria-hidden="true"
+           *ngIf="choosenCategories?.length > 0 && choosenCategories.indexOf(category.id) > -1"></i>
+        <p><i class="fa {{category.icon}} fa-2x" aria-hidden="true"></i></p>
+        {{category.name}}
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary choose-next-button" *ngIf="choosenCategories?.length >= 3"
+            (click)="choose()">
+      Tiếp tục
+    </button>
+  </div>
+
+
+</ng-template>

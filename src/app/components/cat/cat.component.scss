@@ -1,0 +1,30 @@
+@import "../home/home.component";
+
+.chander-category__main {
+  .row {
+    margin: 0 auto;
+
+    .col-lg-4.col-sm-6 {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      height: auto;
+
+      .card-block {
+        height: 180px;
+      }
+    }
+
+    .deal-content {
+      margin-bottom: 5rem;
+    }
+
+    .deal-description {
+      height: 50px;
+    }
+  }
+}
+
+
+

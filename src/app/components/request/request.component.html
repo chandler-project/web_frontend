@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row" *ngIf="currentUser">
+    <div class="col-lg-8 request-input d-flex flex-column">
+      <div class="request-input__info">
+        <div class="request-footer__avatar request-input__avatar">
+          <img
+            src="{{mediaUrl}}{{currentUser.avatar}}"
+            alt="" class="rounded-circle">
+        </div>
+        <div class="request-footer__info">
+          <span>{{currentUser.fullName}}</span>
+          <small *ngIf="currentUser.points < 10000">{{currentUser.points}} điểm</small>
+          <small *ngIf="currentUser.points >= 10000">{{currentUser.points / 1000}}k điểm</small>
+        </div>
+      </div>
+      <input type="text" class="request-input__input" placeholder="Bạn muốn yêu cầu món đồ nào không?"
+             (click)="create()">
+    </div>
+  </div>
+  <div *ngIf="requests?.length > 0">
+    <div class="col-lg-8 ml-auto mr-auto mb-5 d-flex flex-column request-info p-0" *ngFor="let request of requests">
+      <div class="hottest-deal-img-top"
+           background-image="{{request.productPics[0]}}"
+           (click)="gotoDetail(request.id)"></div>
+      <div class="container">
+        <div [innerHTML]="request.description" class="text-justify request-decription"></div>
+        <small class="text-uppercase">
+          <b>{{request.modified | amLocale:'vi' | amTimeAgo}}</b>
+        </small>
+        <div class="group-buttons">
+          <button class="btn-group btn-group-lg btn-price" aria-label="...">{{request.budget.min | number: '3.'}}VND -
+            {{request.budget.max | number: '3.'}} VND
+          </button>
+          <button class="btn-group btn-group-sm btn-primary" aria-label="...">{{request.address}}</button>
+          <button class="btn-group btn-group-sm btn-danger" aria-label="...">{{request.deadline}}</button>
+        </div>
+        <div class="d-flex flex-row mb-3">
+          <b *ngIf="request.bidders.length > 0">Có {{request.bidders.length}} người đặt giá</b>
+          <b *ngIf="request.bidders.length === 0">Chưa có người nào đặt giá cho sản phẩm này</b>
+        </div>
+        <div class="list-bidders" *ngIf="request.bidders?.length > 0">
+          <div class="d-grid bid" *ngFor="let bidder of request.bidders.slice(0,3)">
+            <div class="bid-price">
+              <span class="bid-price__p">{{bidder.price | number: '3.'}} VND</span>
+              <span class="bid-price__when">trong {{bidder.spend}} ngày</span>
+            </div>
+            <div class="bid-comment">
+              <span>{{bidder.sentence}}</span>
+              <span>{{bidder.fullName}}</span>
+            </div>
+            <div class="bid-time text-right">
+              {{bidder.timestamp | amLocale:'vi' | amTimeAgo}}
+            </div>
+          </div>
+        </div>
+        <div class="request-footer"
+             *ngIf="request.owner">
+          <div class="request-footer__avatar">
+            <img src="{{mediaUrl}}{{request.owner.avatar}}" alt="" class="rounded-circle">
+          </div>
+          <div class="request-footer__info">
+            <span>{{request.owner.fullName}}</span>
+            <small *ngIf="request.owner.points < 10000">{{request.owner.points}} điểm</small>
+            <small *ngIf="request.owner.points >= 10000">{{request.owner.points / 1000}}k điểm</small>
+          </div>
+          <!--<div class="text-right">-->
+          <!--<button class="request-footer__bid" (click)="bid(request.id)">Đặt giá</button>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,268 @@
+#footer {
+  position: absolute;
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.tiki-newsletter {
+  background: #f7f7f7;
+  height: 100px;
+  margin-top: 60px;
+}
+
+.tiki-newsletter .tiki-newsletter-title {
+  float: left;
+  width: 545px;
+  margin-right: 30px;
+}
+
+.tiki-newsletter .tiki-newsletter-title .tikicon, .tiki-newsletter .tiki-newsletter-title img {
+  float: left;
+  margin-right: 20px;
+  margin-top: -20px;
+}
+
+.tiki-newsletter .tiki-newsletter-title h3 {
+  color: #4e5052;
+  font-size: 16px;
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+
+.tiki-newsletter .tiki-newsletter-title h5 {
+  font-size: 13px;
+  color: #4e5052;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+.tiki-newsletter .mc-field-group {
+  float: left;
+  width: 345px;
+  margin-right: 10px;
+  margin-top: 35px;
+}
+
+.tiki-newsletter .tiki-newsletter-helper {
+  font-size: 12px;
+  color: red;
+  padding-left: 5px;
+  margin-top: 5px;
+  display: block;
+}
+
+.tiki-newsletter .button {
+  background: #00afef;
+  color: #fff;
+  margin-top: 35px;
+}
+
+.line-bg-body {
+  border: none;
+  border-top: 1px solid #f7f7f7;
+  width: 100%;
+  height: 0;
+  margin-top: 0;
+}
+
+.list-footer-nav {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  background: white;
+}
+
+.footer-nav {
+  width: 219px;
+}
+
+.footer-nav {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+}
+
+.footer-nav h4 {
+  color: #333;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 17px;
+  font-stretch: normal;
+}
+
+.footer-nav .hotline-number {
+  color: #c4011a;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.footer-nav .nav-list a {
+  margin-bottom: 11px;
+  display: block;
+  color: #333;
+  font-size: 12px;
+}
+
+.footer-nav .nav-other {
+  overflow: hidden;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+
+  .icon-2h, .icon-add-to-cart2x, .icon-appstore, .icon-arrow-back, .icon-arrow-down, .icon-bestseller, .icon-bo-cong-thuong, .icon-burger-menu, .icon-cash, .icon-circle-close, .icon-circle-tick, .icon-cup-prize, .icon-ebook, .icon-email, .icon-exclusive, .icon-fb, .icon-footer-zalo, .icon-gift, .icon-header_2h, .icon-home-floor-book, .icon-home-floor-bottle, .icon-home-floor-camera, .icon-home-floor-cellphone, .icon-home-floor-electronic, .icon-home-floor-headphone, .icon-home-floor-lamp, .icon-home-floor-laptop, .icon-home-floor-lipsticks, .icon-home-floor-pan, .icon-home-floor-sport, .icon-home-floor-sprayer, .icon-home-floor-toy, .icon-home-floor-tshirt, .icon-home-floor-tv, .icon-hot, .icon-hot-deal-icon, .icon-info, .icon-installment, .icon-internet-banking, .icon-jcb, .icon-location, .icon-main-menu-bike, .icon-main-menu-book, .icon-main-menu-bottle, .icon-main-menu-camera, .icon-main-menu-cellphone, .icon-main-menu-electronic, .icon-main-menu-headphone, .icon-main-menu-hot, .icon-main-menu-lamp, .icon-main-menu-laptop, .icon-main-menu-lipsticks, .icon-main-menu-pan, .icon-main-menu-sport, .icon-main-menu-sprayer, .icon-main-menu-toy, .icon-main-menu-tshirt, .icon-main-menu-tv, .icon-main-menu-vas, .icon-main-menu-voucher, .icon-mastercard, .icon-money_bag, .icon-new, .icon-newsletter, .icon-phone, .icon-playstore, .icon-return, .icon-search, .icon-store, .icon-tra-gop, .icon-visa, .icon-warranty, .icon-white-cellphone, .icon-youtube, .icon-zalo {
+    background-image: url('/assets/imgs/sprite@2x.png');
+    background-size: 316px 291px;
+  }
+  .icon-visa {
+    background-position: -146px -145px;
+  }
+
+  .icon-mastercard {
+    background-position: -54px -202px;
+  }
+
+  .icon-jcb {
+    background-position: 0 -202px;
+  }
+
+  .icon-cash {
+    background-position: -200px -145px;
+    width: 54px;
+    height: 33px;
+  }
+
+  .icon-internet-banking {
+    background-position: -38px -145px;
+  }
+
+  .icon-installment {
+    background-position: -92px -145px;
+  }
+
+  .icon-mastercard, .icon-visa, .icon-installment, .icon-internet-banking, .icon-jcb {
+    width: 54px;
+    height: 33px;
+  }
+
+  .icon-fb {
+    background-position: -254px -145px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-youtube {
+    background-position: -108px -202px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-footer-zalo {
+    background-position: -120px -99px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-appstore {
+    background-position: -163px 0;
+    width: 134px;
+    height: 40px;
+  }
+
+  .icon-playstore {
+    background-position: -163px -40px;
+    width: 134px;
+    height: 40px;
+  }
+
+  .icon-newsletter {
+    background-position: 0 0;
+    width: 163px;
+    height: 99px;
+  }
+}
+
+.footer-nav .nav-other.social-conn a {
+  margin-right: 10px;
+}
+
+.footer-nav .nav-other .tikicon, .footer-nav .nav-other a, .footer-nav .nav-other span {
+  display: inline-block;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 7px;
+}
+
+.footer-address {
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
+address {
+  font-style: normal;
+  line-height: 1.42857;
+}
+
+.footer-address .address-office, .footer-address .address-service {
+  padding-left: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.container-fluid:after, .container-fluid:before, .container:after, .container:before, .row:after, .row:before {
+  display: table;
+  content: " ";
+}
+
+.tikicon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-location {
+  background-position: 0 -145px;
+  width: 38px;
+  height: 57px;
+}
+
+.footer-address .info-address {
+  width: 475px;
+  display: inline-block;
+  margin-left: 20px;
+  vertical-align: top;
+}
+
+.footer-address .info-address p.add-real {
+  color: #333;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.footer-address .info-address p {
+  font-style: normal;
+  font-size: 11px;
+  color: #4a4a4a;
+  margin-bottom: 1px;
+  line-height: 22px;
+  font-weight: 300;
+}
+
+.footer-address .info-address p b {
+  font-weight: 700;
+}
+
+.footer-address .address-service {
+  margin-left: 30px;
+}
+
+.footer-address .address-office, .footer-address .address-service {
+  padding-left: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.footer-adwords-seo {
+  background: #f7f7f7;
+  padding: 30px 0;
+}

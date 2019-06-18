@@ -1,0 +1,68 @@
+
+.order-page {
+  padding: 32px;
+
+  h3 {
+    font-weight: bold;
+  }
+
+  .payment-form__input {
+    border: none;
+    border-bottom: 1px solid #979797;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .payment-form__group-inputs {
+    width: 46%;
+  }
+
+  .payment-secure-code {
+    float: left;
+  }
+
+  .total-payment {
+    padding: 22px;
+    border: 1px solid #979797;
+
+    .payment-total {
+      border-bottom: 1px solid #979797;
+
+      h2 {
+        font-weight: bold;
+        font-size: 32px;
+        margin-left: 10px;
+      }
+    }
+
+    .payment-total-detail {
+      border-bottom: 1px solid #979797;
+      padding-top: 20px;
+      .payment-total-line {
+        padding-bottom: 20px;
+      }
+    }
+
+    .payment-sub-total {
+      padding-top: 20px;
+
+      .payment-form-control {
+        margin-top: 30px;
+        margin-bottom: 4px;
+        border: 1px solid #bdbdbd;
+        padding: 12px 17px;
+      }
+    }
+  }
+
+  .accept-payment {
+    background: #92bc3a;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    padding: 26px 44px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,95 @@
+<div class="profile-main w-100" *ngIf="currentUser">
+  <div class="container">
+    <div class="row">
+      <div class="col-2 profile-avatar pull-left">
+        <img src="{{mediaUrl}}{{currentUser.avatar}}" alt="" class="rounded-circle">
+        <p class="text-center text-warning pt-2 p-0 m-0" (click)="logOut()"
+           *ngIf="currentLoggedInUserId === currentUser.id">Đăng xuất</p>
+      </div>
+      <div class="col-8 profile-information pull-left">
+        <div class="name">
+          {{currentUser.fullName}}
+        </div>
+        <div class="description" *ngIf="currentUser.bio">
+          {{currentUser.bio}}
+        </div>
+        <button class="btn btn-profile-points">
+          {{currentUser.points}} điểm
+        </button>
+        <div class="profile-verified" *ngIf="currentUser.address">
+          <span class="description">
+            <i class="fa fa-home" aria-hidden="true"></i>
+             {{currentUser.address}}
+          </span>
+          <span class="description" *ngIf="currentUser.phoneNumber">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+             {{currentUser.phoneNumber}}
+          </span>
+        </div>
+        <div class="profile-verified">
+          <span class="description">
+            <i class="fa fa-shield" aria-hidden="true"></i>
+             Tài khoản đã được xác thực
+          </span>
+          <span class="description">
+            <i class="fa fa-star" aria-hidden="true"></i>
+             {{totalReviews}} đánh giá
+          </span>
+        </div>
+        <div class="profile-activities">
+          <span (click)="gotoProfileDeal()">{{totalDeals}} deals</span>
+          <span (click)="gotoProfileRequest()">{{totalRequests}} yêu cầu</span>
+          <span (click)="gotoOrderPage()">{{totalOrders}} đơn hàng</span>
+        </div>
+      </div>
+      <div class="col-2 pull-left">
+        <button class="btn btn-edit-profile" *ngIf="currentLoggedInUserId === currentUser.id" (click)="editProfile()">
+          Chỉnh sửa hồ sơ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="profile-reviews w-100">
+  <div class="container">
+    <h3>Đánh giá ({{totalReviews}})</h3>
+    <div class="row" *ngIf="totalReviews">
+      <div class="col-8 profile-review">
+        <div class="profile-review-info"
+             *ngFor="let feedBack of feedBacks | paginate: { itemsPerPage: 6, currentPage: p }">
+          <p>{{feedBack.content}}</p>
+          <div class="request-footer">
+            <div class="request-footer__avatar">
+              <img src="{{baseUrl}}/{{feedBack.owner.avatar}}" alt=""
+                   class="rounded-circle order-avatar">
+            </div>
+            <div class="request-footer__info">
+              <span>{{feedBack.owner.fullName}}</span>
+              <small>{{feedBack.owner.points}} điểm</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="verify-info">
+          <h1 class="text-center">Verify Infor</h1>
+          <div class="deal-info__list">
+            <ul>
+              <li>Đã kết nối tài khoản facebook</li>
+              <li>Đã kết nối số điện thoại</li>
+              <li>Đã kết nối email</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event" previousLabel="Trước"
+                           nextLabel="Sau"></pagination-controls>
+    </div>
+    <div class="row text-center no-reviews d-flex justify-content-center align-items-center"
+         *ngIf="!totalReviews && currentUser">
+      <p class="col-12" *ngIf="currentLoggedInUserId === currentUser.id">Hiện tại bạn chưa có đánh giá nào</p>
+      <p class="col-12" *ngIf="currentLoggedInUserId !== currentUser.id">Hiện tại {{currentUser.fullName}} chưa có đánh
+        giá nào</p>
+    </div>
+  </div>
+</div>

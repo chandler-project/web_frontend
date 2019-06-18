@@ -1,0 +1,148 @@
+<div class="container deal-banner" *ngIf="deal"
+     background-image="{{deal.productPics[0]}}">
+</div>
+<div class="container pb-5" *ngIf="deal">
+  <div class="row pb-5">
+    <div class="col-lg-9">
+      <div class="deal-info">
+        <h1 class="deal-product-name">{{deal.productName}}</h1>
+        <div class="upvote-downvote d-flex mb-3">
+          <div class="d-flex ">
+            <div [innerHTML]="upvoteSVG" (click)="upVote()"></div>
+            <span>{{deal.upvote}}</span>
+          </div>
+          <div class="d-flex ">
+            <div [innerHTML]="downvoteSVG" (click)="downVote()"></div>
+            <span>{{deal.downvote}}</span>
+          </div>
+        </div>
+        <div class="button-end-price mb-3">
+          <button type="button" class="btn btn-danger">Thời gian ship: {{deal.shippingTime }}</button>
+          <button type="button" class="btn btn-danger">Hết hạn vào: {{deal.deadline | date:'shortDate' }}</button>
+        </div>
+        <div class="button-end-price mb-3">
+          <button type="button" class="btn btn-warning">Giá sản phẩm: {{deal.price | number: '3.'}} VND</button>
+          <button type="button" class="btn btn-warning">Giá ship: {{deal.shippingPrice | number: '3.'}} VND</button>
+        </div>
+        <div class="deal-reference text-ellipsis">
+          <a href="{{deal.reference}}">{{deal.reference}}</a>
+        </div>
+        <div class="deal-description">
+          <h5>Chi tiết sản phẩm</h5>
+          <div [innerHTML]="deal.productDesc"></div>
+        
+        </div>
+      </div>
+      <div class="comment-sections" *ngIf="totalComments > 0 && comments?.length > 0">
+        <h3>Bình Luận ({{totalComments}})</h3>
+        <div class="row ml-0 mr-0 mb-3" *ngIf="currentUser">
+          <div class=" request-input d-flex flex-column m-0 w-100">
+            <div class="request-input__info">
+              <div class="request-footer__avatar request-input__avatar float-left mr-3">
+                <img
+                  src="{{mediaUrl}}{{currentUser.avatar}}"
+                  alt="" class="rounded-circle">
+              </div>
+              <input type="text" class="form-control comment-input ml-5 no-border"
+                     placeholder="Bạn nghĩ sao về sản phẩm này ?" (keyup.enter)="addComment($event)">
+            </div>
+          </div>
+        </div>
+        <div class="comments d-flex flex-row mb-3"
+             *ngFor="let comment of comments | paginate: { itemsPerPage: 5, currentPage: p }">
+          <div class="comment-info d-flex flex-row">
+            <img src="{{mediaUrl}}{{comment.owner.avatar}}" alt="" class="rounded-circle">
+            <div class="d-flex flex-column bidder-name">
+              <span class="bidder-fullname"><b>{{comment.owner.fullName}}</b></span>
+              <span class="bidder-point"><b>{{comment.owner.points}} điểm</b></span>
+              <span class="comment-content">{{comment.content}}</span>
+            </div>
+          </div>
+        </div>
+        <pagination-controls (pageChange)="p = $event" previousLabel="Trước"
+                             nextLabel="Sau"></pagination-controls>
+      </div>
+      <div class="comment-sections" *ngIf="totalComments === 0 && comments?.length === 0">
+        <h3>Bình Luận ({{totalComments}})</h3>
+        <div class="row ml-0 mr-0 mb-3" *ngIf="currentUser">
+          <div class=" request-input d-flex flex-column m-0 w-100">
+            <div class="request-input__info">
+              <div class="request-footer__avatar request-input__avatar float-left mr-3">
+                <img
+                  src="{{mediaUrl}}{{currentUser.avatar}}"
+                  alt="" class="rounded-circle">
+              </div>
+              <input type="text" class="form-control comment-input ml-5 no-border"
+                     placeholder="Bạn nghĩ sao về sản phẩm này ?" (keyup.enter)="addComment($event)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="shipper-info" *ngIf="deal.shipper">
+        <h4 class="shipper-title">Người giao hàng</h4>
+        <div class="request-input__info d-flex">
+          <div class="request-footer__avatar request-input__avatar">
+            <img src="{{baseUrl}}/{{deal.shipper.avatar}}"
+                 alt="" class="rounded-circle">
+          </div>
+          <div class="request-footer__info d-flex flex-column">
+            <span>{{deal.shipper.fullName}}</span>
+            <small>{{deal.shipper.points}} điểm</small>
+            <small>{{deal.shipper.bio}}</small>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary w-100" (click)="request()"
+              *ngIf="currentUser && currentUser.id !== deal.shipper.id && !isOrdered">Đặt mua ngay
+      </button>
+      <div class="activities d-flex flex-column" *ngIf="deal.requesters?.length > 0">
+        <h4 class="activity__title">Hoạt động gần đây</h4>
+        <div *ngFor="let requester of deal.requesters | slice:0:limit" class="d-flex flex-column request-single">
+          <div class="request-input__info d-flex flex-row justify-content-between">
+            <div class="request-footer__avatar request-input__avatar">
+              <img src="{{baseUrl}}/{{requester.avatar}}"
+                   alt="" class="rounded-circle">
+            </div>
+            <div class="request-footer__info d-flex flex-column activity__person">
+              <span>{{requester.fullName}}</span>
+              <small>{{requester.points ? requester.points : 0}} điểm</small>
+            </div>
+            <div class="timestamp">{{requester.timestamp | amLocale:'vi' | amTimeAgo}}</div>
+          </div>
+          <p class="p-0 m-0 ordered-sentence">Đã đặt mua</p>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-3 activity__total">
+          <span
+            class="justify-content-center d-flex align-items-center">{{deal.requesters.length}} người đã đặt mua</span>
+          <button class="btn btn-default" *ngIf="deal.requesters?.length > 3 && limit <= deal.requesters.length"
+                  (click)="limit = limit + 3">Xem thêm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="relate-deals" *ngIf="relateDeals?.length > 0">
+    <div class="row">
+      <div class="col-12"><h3>Sản phẩm liên quan</h3></div>
+      <div class="col-lg-3 col-sm-6" *ngFor="let deal of relateDeals">
+        <div class="chandler__home-deal">
+          <div class="card">
+            <div class="card-img-top"
+                 [ngStyle]="{'background-image': 'url(\'' + deal.productPics[0] + '\')'}"></div>
+            <div class="card-block">
+              <div class="clearfix">
+                <small class="pull-left">{{getCategoryName(deal.categoryId)}}</small>
+                <small class="pull-right">{{deal.price | number:'3.'}}VND</small>
+              </div>
+              <h4 class="card-title"><a (click)="gotoDetail(deal.id)">{{deal.productName.slice(0,20)}}</a></h4>
+              <div [innerHTML]="deal.productDesc" class="card-text chandler__home-description text-ellipsis"></div>
+              <chandler-deal-footer [deal]="deal"></chandler-deal-footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

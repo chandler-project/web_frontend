@@ -1,0 +1,36 @@
+@import "../../deal/deal.component";
+
+.btn-submit-request {
+  width: 300px;
+  background: #0058f5;
+  height: 60px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: 'Cabin';
+  border-radius: 0;
+  margin-top: 30px;
+}
+
+button[dropdownToggle] {
+  background: #ffffff;
+  color: #646465;
+  border: 0;
+  font-family: 'Cabin';
+  padding-right: 30px;
+  border-radius: 0;
+}
+
+#product-budget, #product-remain-time {
+  width: 428px;
+  text-align: left;
+}
+
+i {
+  position: absolute;
+  right: 10px;
+}
+
+.show > .dropdown-menu {
+  border-radius: 0;
+  width: 100%;
+}
